@@ -324,7 +324,7 @@ function initMap() {
                     });
 
                 // Call for the wikipidia API. which will shows us the links for the clicked marker.
-                var wikiUrl = 'http://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+                var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
                 var wikiList;
                 var fullWikiList = '<br><strong>Related Wikipedia Articles:</strong><br>';
 
