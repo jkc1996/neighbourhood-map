@@ -114,9 +114,10 @@ body {
   margin-left: 25px;
 }
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 500px) {
   #map { font-size: 2px;height: 85%;}
   #sideNavbar { font-size: 2vw;}
   #filterSearch { font-size: 3vw;}
-  #titleName { font-size: 2.5vw;}
+  #titleName { font-size: 15px;}
+  #subTitle { padding-bottom:-20px;font-size: 12px;}
 }
