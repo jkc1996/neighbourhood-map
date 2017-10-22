@@ -329,7 +329,7 @@ function initMap() {
                 var fullWikiList = '<br><strong>Related Wikipedia Articles:</strong><br>';
 
                 var wikiRequestTimeout = setTimeout(function() {   //there is no .error() method for JSON P.so we have to use this.
-                    fullWikiList.text("failed to get wikipedia resoueces");
+                    fullWikiList = fullWikiList + "failed to get wikipedia resoueces";
                     }, 8000);
                 // Here we are using the AJAX method of calling web apis.
                 $.ajax({
