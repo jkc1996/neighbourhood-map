@@ -7,18 +7,18 @@ _**This is a single page application featuring a map of neighbourhood of 10010 N
 To get started, check out the [My Repository](https://github.com/jkc1996/neighbourhood-map) and follow the following steps to run the file:
 
 ### Table of Contents
-* ##### [Getting Started](#Getting-Started)
-* ##### [Project Description](#Description)
-* ##### License
+* #### [Getting Started](#Getting-Started)
+* #### [Project Description](#Description)
+* #### License(#License)
 
-#### Getting Started
+### Getting Started
 
 1. Download the project by clicking on **Clone or download** button.
 2. Open the **index.html** file in your favourite browser.
 3. And have fun wondering around the 10010 NY Neighbourhood !
 4. Or you can go to [This link](https://jkc1996.github.io/neighbourhood-map/)
 
-#### Description
+### Description
 
 **This is an interactive website to search for restaurants,bars and shopping stores in the city of New York. It contains General information, NY Times articles, Wikipidia links and FourSquare Tips and Rating for the venue.**
 
@@ -35,6 +35,6 @@ _This project contains following data related to the venue:_
 5. By default you can see all the markers on the map. clicking on any of them will pop up the information about the place.
 6. Although you can search the place from the **Side Navigation Bar.** Which contains list of all the places.
 
-#### License
+### License
 
 The content of this repository is licensed under [MIT](https://choosealicense.com/licenses/mit/).
