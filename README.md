@@ -9,7 +9,7 @@ To get started, check out the [My Repository](https://github.com/jkc1996/neighbo
 ### Table of Contents
 * #### [Getting Started](#Getting-Started)
 * #### [Project Description](#Description)
-* #### License(#License)
+* #### [License](#License)
 
 ### Getting Started
 
