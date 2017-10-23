@@ -7,9 +7,9 @@ _**This is a single page application featuring a map of neighbourhood of 10010 N
 To get started, check out the [My Repository](https://github.com/jkc1996/neighbourhood-map) and follow the following steps to run the file:
 
 ### Table of Contents
-* #### [Getting Started](#Getting-Started)
-* #### [Project Description](#Description)
-* #### [License](#License)
+* #### [Getting Started](#Getting Started)
+* #### [Description](#description)
+* #### [License](#license)
 
 ### Getting Started
 
