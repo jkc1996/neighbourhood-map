@@ -1,5 +1,9 @@
-'use strict';
-
+"use strict";
+/*jshint loopfunc:true */
+/*global google: false */
+/*global ko: false*/
+/*jslint node: true */
+/*jshint strict:false */
 //style for the Map.(found it on the https://snazzymaps.com/)
 var styles = [{
     "featureType": "all",
@@ -290,126 +294,6 @@ function initMap() {
         // Creating marker as part of viewModael. which will Provide the marker functionality to our locations in viewModel.
         viewModel.locationArray()[i].marker = marker;
 
-        // Function which will populate the infowindow whenever we click the markers.
-        function populateInfoWindow(marker, infowindow, locationItem) {
-
-            // Check to make sure the infowindow is not already opened on this marker.
-            if (infowindow.marker != marker) {
-                infowindow.setContent('');
-
-                infowindow.marker = marker;
-                // Make sure the marker property is cleared if the infowindow is closed.
-                infowindow.addListener('closeclick', function() {
-                    infowindow.marker = null;
-                    // to make the map appear like it did when the page loaded initmap is induced (for keeping the same center as mapzoom changes the view and all markers dont seem visible after the infowindow is opened)
-                    initMap();
-                });
-
-                /* There are 3 third party API we are using for providing the information about the places:
-                 * 1. FourSquare, 2. NewYork Times, 3. Wikipidia.
-                 * FourSquare will provide the rating of the place out of 10 by the visitor of the place, and one of the tip related to that place.
-                 * NY Time and Wikipidia gives us the links related to our place. (But not accurately !! Because the places are just for shopping, food, clothing )
-                 */
-                // Calling the foursquare url and it's response using jQuery's getJSON method.
-                var foursquareurl = 'https://api.foursquare.com/v2/venues/' + marker.id + '?&limit=1&client_id=WZV4V3OE35NQJVIHYIDFZQK0H5ZZMMS5FKX4OTCGOZ3RR2E5&client_secret=NL4SDPZJBHH03UOIJXWQPSPLJ5TWWHL4H01C1S1YULWDZHWJ&v=20171016';
-                var fourList = '<br><strong>Related FourSquare Tip:</strong><br>';
-                $.getJSON(foursquareurl, function(data) {
-                        // variable for the tip and rating of the place.
-                        var items = data['response']['venue']['tips']['groups'][0]['items'][0].text;
-                        var ratings = data['response']['venue'].rating;
-                        fourList = fourList + '<strong> Ratings: ' + ratings + '</strong><br>' + items;
-                    })
-                    .error(function() {
-                        alert("Oops! Sorry. Something went wrong with FourSquare.");
-                    });
-
-                // Call for the wikipidia API. which will shows us the links for the clicked marker.
-                var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
-                var wikiList;
-                var fullWikiList = '<br><strong>Related Wikipedia Articles:</strong><br>';
-
-                var wikiRequestTimeout = setTimeout(function() {   //there is no .error() method for JSON P.so we have to use this.
-                    fullWikiList = fullWikiList + "failed to get wikipedia resoueces";
-                    }, 8000);
-                // Here we are using the AJAX method of calling web apis.
-                $.ajax({
-                    url: wikiUrl,
-                    dataType: 'jsonp',
-                    success: function(response) {
-                        var articleList = response[1].slice(0, 2); //in the wiki page's responese==(data) onject ,"1" is the key which contains the articles about the city.
-                        if(articleList.length === 0) {
-                            fullWikiList = fullWikiList + 'Sorry No link related to this place is found !';
-                        }
-                        else {
-                        articleList.forEach(function(articalStr) {
-                            var url = 'http://en.wikipedia.org/wiki/' + articalStr;
-                            wikiList = ('<li><a href="' + url + '">' + articalStr + '</a></li>');
-                            fullWikiList = fullWikiList + wikiList;
-                        });
-                        }
-                        clearTimeout(wikiRequestTimeout);   // if function executed succesfully we dont need time out !!!
-                    }
-                });
-
-                // Using google api, we are providing the streetview of the place.
-                var streetViewService = new google.maps.StreetViewService();
-                var radius = 50;
-                // Function which gives us the view by checking the status of the place.
-                // If the view is not available it will the closest view in the radius of 50 meters.
-                function getStreetView(data, status) {
-                        if (status == google.maps.StreetViewStatus.OK) {
-                            var nearStreetViewLocation = data.location.latLng;
-                            var heading = google.maps.geometry.spherical.computeHeading(
-                                nearStreetViewLocation, marker.position);
-                            var panoramaOptions = {
-                                position: nearStreetViewLocation,
-                                pov: {
-                                    heading: heading,
-                                    pitch: 30
-                                }
-                            };
-                            // Providing the panorama view for the place.
-                            var panorama = new google.maps.StreetViewPanorama(
-                                document.getElementById('pano'), panoramaOptions);
-                        } else {
-                            infowindow.setContent('<div>' + marker.title + '</div>' +
-                                '<div>sorry ! No Street View Found</div>');
-                        }
-
-                    }
-                    // Call for the NY times links for our locations.
-                var list;
-                var articles;
-                var fullList = '<br><strong>Related NY Times Articles:</strong><br>';
-                var nytimeurl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + marker.title + '&sort=newest&api-key=940686e225724e549cc82b99694abee9';
-
-                // JSON request for the NY times articles related to the location.
-                $.getJSON(nytimeurl, function(data) {
-                        //used slice(0, 3) to get only 3 articles in the infowindow as it was looking overcrowded before
-                        articles = data.response.docs.slice(0, 3);
-                        for (var i = 0; i < articles.length; i++) {
-                            var article = articles[i];
-                            list = i + 1 + '.' + '<a href="' + article.web_url + '"">' + article.headline.main + '</a><br>';
-                            fullList = fullList + list;
-                        }
-                        // Setting the infowindow content for our information, which we got from our API calls.
-                        infowindow.setContent('<div style="font-size: 15px;"><strong>' + marker.title + '</strong></div>' + '<div><div id="pano"></div>' + '<div>' + fullList + '</div>' + '<div>' + fullWikiList + '</div>' + '<div>' + fourList + '</div>');
-
-                        // Calling the panorama view on the selected marker location.
-                        streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-                    })
-                    .error(function() {
-                        alert("Something went wrong! NYT articles culd not be loaded");
-                    });
-
-                //pan down infowindow by 500px to keep whole infowindow on screen
-                map.panBy(0, -500);
-
-                // Open the infowindow on the correct marker.
-                infowindow.open(map, marker);
-            }
-        }
-
         // Push the marker to our array of markers.
         markers.push(marker);
         // Create an onclick event to open an infowindow at each marker.
@@ -418,7 +302,126 @@ function initMap() {
         });
         bounds.extend(markers[i].position);
 
-    };
+    } //end of for loop
+    // Function which will populate the infowindow whenever we click the markers.
+    function populateInfoWindow(marker, infowindow, locationItem) {
+
+        // Check to make sure the infowindow is not already opened on this marker.
+        if (infowindow.marker != marker) {
+            infowindow.setContent('');
+
+            infowindow.marker = marker;
+            // Make sure the marker property is cleared if the infowindow is closed.
+            infowindow.addListener('closeclick', function() {
+                infowindow.marker = null;
+                // to make the map appear like it did when the page loaded initmap is induced (for keeping the same center as mapzoom changes the view and all markers dont seem visible after the infowindow is opened)
+                initMap();
+            });
+            var streetViewService = new google.maps.StreetViewService();
+            var radius = 50;
+            // Function which gives us the view by checking the status of the place.
+            // If the view is not available it will the closest view in the radius of 50 meters.
+            // Using google api, we are providing the streetview of the place.
+            var getStreetView = function(data, status) {
+                if (status == google.maps.StreetViewStatus.OK) {
+                    var nearStreetViewLocation = data.location.latLng;
+                    var heading = google.maps.geometry.spherical.computeHeading(
+                        nearStreetViewLocation, marker.position);
+                    var panoramaOptions = {
+                        position: nearStreetViewLocation,
+                        pov: {
+                            heading: heading,
+                            pitch: 30
+                        }
+                    };
+                    // Providing the panorama view for the place.
+                    var panorama = new google.maps.StreetViewPanorama(
+                        document.getElementById('pano'), panoramaOptions);
+                } else {
+                    infowindow.setContent('<div>' + marker.title + '</div>' +
+                        '<div>sorry ! No Street View Found</div>');
+                }
+
+            };
+            /* There are 3 third party API we are using for providing the information about the places:
+             * 1. FourSquare, 2. NewYork Times, 3. Wikipidia.
+             * FourSquare will provide the rating of the place out of 10 by the visitor of the place, and one of the tip related to that place.
+             * NY Time and Wikipidia gives us the links related to our place. (But not accurately !! Because the places are just for shopping, food, clothing )
+             */
+            // Calling the foursquare url and it's response using jQuery's getJSON method.
+            var foursquareurl = 'https://api.foursquare.com/v2/venues/' + marker.id + '?&limit=1&client_id=WZV4V3OE35NQJVIHYIDFZQK0H5ZZMMS5FKX4OTCGOZ3RR2E5&client_secret=NL4SDPZJBHH03UOIJXWQPSPLJ5TWWHL4H01C1S1YULWDZHWJ&v=20171016';
+            var fourList = '<br><strong>Related FourSquare Tip:</strong><br>';
+            $.getJSON(foursquareurl, function(data) {
+                    // variable for the tip and rating of the place.
+                    var items = data.response.venue.tips.groups[0].items[0].text;
+                    var ratings = data.response.venue.rating;
+                    fourList = fourList + '<strong> Ratings: ' + ratings + '</strong><br>' + items;
+                })
+                .error(function() {
+                    alert("Oops! Sorry. Something went wrong with FourSquare.");
+                });
+
+            // Call for the wikipidia API. which will shows us the links for the clicked marker.
+            var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
+            var wikiList;
+            var fullWikiList = '<br><strong>Related Wikipedia Articles:</strong><br>';
+
+            var wikiRequestTimeout = setTimeout(function() { //there is no .error() method for JSON P.so we have to use this.
+                fullWikiList = fullWikiList + "failed to get wikipedia resoueces";
+            }, 8000);
+            // Here we are using the AJAX method of calling web apis.
+            $.ajax({
+                url: wikiUrl,
+                dataType: 'jsonp',
+                success: function(response) {
+                    var articleList = response[1].slice(0, 2); //in the wiki page's responese==(data) onject ,"1" is the key which contains the articles about the city.
+                    if (articleList.length === 0) {
+                        fullWikiList = fullWikiList + 'Sorry No link related to this place is found !';
+                    } else {
+                        articleList.forEach(function(articalStr) {
+                            var url = 'http://en.wikipedia.org/wiki/' + articalStr;
+                            wikiList = ('<li><a href="' + url + '">' + articalStr + '</a></li>');
+                            fullWikiList = fullWikiList + wikiList;
+                        });
+                    }
+                    clearTimeout(wikiRequestTimeout); // if function executed succesfully we dont need time out !!!
+                }
+            });
+
+            // Call for the NY times links for our locations.
+            var list;
+            var articles;
+            var fullList = '<br><strong>Related NY Times Articles:</strong><br>';
+            var nytimeurl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + marker.title + '&sort=newest&api-key=940686e225724e549cc82b99694abee9';
+
+            // JSON request for the NY times articles related to the location.
+            $.getJSON(nytimeurl, function(data) {
+                    //used slice(0, 3) to get only 3 articles in the infowindow as it was looking overcrowded before
+                    articles = data.response.docs.slice(0, 3);
+                    for (var i = 0; i < articles.length; i++) {
+                        var article = articles[i];
+                        list = i + 1 + '.' + '<a href="' + article.web_url + '"">' + article.headline.main + '</a><br>';
+                        fullList = fullList + list;
+                    }
+                    // Setting the infowindow content for our information, which we got from our API calls.
+                    infowindow.setContent('<div style="font-size: 15px;"><strong>' + marker.title + '</strong></div>' + '<div><div id="pano"></div>' + '<div>' + fullList + '</div>' + '<div>' + fullWikiList + '</div>' + '<div>' + fourList + '</div>');
+
+                    // Calling the panorama view on the selected marker location.
+                    streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+                })
+                .error(function() {
+                    alert("Something went wrong! NYT articles culd not be loaded");
+                });
+
+            //pan down infowindow by 500px to keep whole infowindow on screen
+            map.panBy(0, -500);
+
+            // Open the infowindow on the correct marker.
+            infowindow.open(map, marker);
+        }
+    }
+
+
 
 }
 
@@ -443,17 +446,17 @@ function mapError() {
 // viewModel for our location and the functions related to side navigation bar.
 var ViewModel = function() {
     var self = this;
-// Putting our locations into an observable array.
+    // Putting our locations into an observable array.
     self.locationArray = ko.observableArray(locations);
     // for the slide out menu bar. By default it is closed.(i.e false)
     self.navBarOpen = ko.observable(false);
 
     self.closeNavBar = function() {
         self.navBarOpen(false);
-    }
+    };
     self.openNavBar = function() {
         self.navBarOpen(true);
-    }
+    };
     // This will pop up the infowindow whenever we click on one of the places in the listview.
     self.selectListItem = function(listItems, marker) {
         google.maps.event.trigger(listItems.marker, 'click');
@@ -499,7 +502,7 @@ var ViewModel = function() {
             return searchArray;
         }
     });
-}
+};
 
 var viewModel = new ViewModel();
 
