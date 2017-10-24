@@ -9,8 +9,9 @@ You Can check out the [My Repository](https://github.com/jkc1996/neighbourhood-m
 ### Table of Contents
 * #### [Getting Started](#Getting-Started)
 * #### [Description](#description)
-* #### [License](#license)
 * #### [Reference](#reference)
+* #### [License](#license)
+
 
 ### Getting Started
 
