@@ -4,12 +4,13 @@
 
 _**This is a single page application featuring a map of neighbourhood of 10010 New York. This map including highlighted locations, third-party data about those locations and many more things !!**_
 
-To get started, check out the [My Repository](https://github.com/jkc1996/neighbourhood-map) and follow the following steps to run the file:
+You Can check out the [My Repository](https://github.com/jkc1996/neighbourhood-map) for more Information.
 
 ### Table of Contents
 * #### [Getting Started](#Getting-Started)
 * #### [Description](#description)
 * #### [License](#license)
+* #### [Reference](#reference)
 
 ### Getting Started
 
@@ -34,6 +35,15 @@ _This project contains following data related to the venue:_
     - This API will provide the _**2 wikipidia links**_ related to that venue.
 5. By default you can see all the markers on the map. clicking on any of them will pop up the information about the place.
 6. Although you can search the place from the **Side Navigation Bar.** Which contains list of all the places.
+
+### Reference
+
+1. [Google Maps API](https://developers.google.com/maps/)
+2. [jQuery](https://jquery.com/)
+3. [W3Schools](https://www.w3schools.com/)
+4. [KnockoutJS](http://knockoutjs.com/)
+5. [NY Times API](https://developer.nytimes.com/)
+6. [Foursquare API](https://developer.foursquare.com/)
 
 ### License
 
