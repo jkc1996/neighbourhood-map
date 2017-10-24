@@ -1,0 +1,13 @@
+{
+"globals": {
+    "google": false,
+    "ko": false,
+    "document": false,
+    "$": false,
+    "window": false,
+    "setTimeout": false,
+    "clearTimeout": false,
+    "alert": false
+  }
+
+}
