@@ -21,6 +21,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 .sidenav {
   height: 92%;
   width: 0;
@@ -104,7 +105,7 @@ body {
   overflow: hidden;
 }
 #pano {
-  width: 300px;
+  width: 200px;
   height: 200px;
   margin-left: 25px;
 }
