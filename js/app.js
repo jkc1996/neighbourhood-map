@@ -424,12 +424,9 @@ function initMap() {
     });
 
             //pan down infowindow by 500px to keep whole infowindow on screen
-           // map.panBy(0, -500);
-       // google.maps.event.addListener(marker, 'click', function() {
+            map.panBy(0, -450);
             // Open the infowindow on the correct marker.
             infowindow.open(map,marker);
-          //  map.setCenter(marker.position);
-     //   });
         }
     }
 
