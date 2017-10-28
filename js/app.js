@@ -225,6 +225,7 @@ var locations = [{
     fourSquareId: '4a98599ef964a520a62b20e3'
 }];
 
+var marker;
 //Function responsible for the map loading. Every time we load the file, the new map
 //is created with the markers pointing to the places and different functionality related to maps.
 function initMap() {
@@ -255,7 +256,7 @@ function initMap() {
     // Creating the new infowindow of max size 350. It will shows the information about the place
     // whenever the respactive marker is clicked.
     var largeInfowindow = new google.maps.InfoWindow({
-        maxWidth: 350
+        maxWidth: 250
     });
 
     // Styling the markers a bit. This is the default marker icon color (red).
@@ -274,11 +275,11 @@ function initMap() {
         var title = locations[i].title;
         var id = locations[i].fourSquareId;
         // Create a marker per location, and put into markers array.
-        var marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
             map: map,
             position: position,
             title: title,
-            animation: google.maps.Animation.BOUNCE,
+            animation: google.maps.Animation.DROP,
             icon: defaultIcon,
             id: id
         });
@@ -297,12 +298,17 @@ function initMap() {
         // Push the marker to our array of markers.
         markers.push(marker);
         // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function() {
+        marker.addListener('click',function(){
             populateInfoWindow(this, largeInfowindow);
-        });
+            this.setAnimation(google.maps.Animation.BOUNCE);
+            alert(this.getPosition());
+                    });
         bounds.extend(markers[i].position);
 
     } //end of for loop
+     map.fitBounds(bounds);
+
+
     // Function which will populate the infowindow whenever we click the markers.
     function populateInfoWindow(marker, infowindow, locationItem) {
 
@@ -323,7 +329,8 @@ function initMap() {
             // If the view is not available it will the closest view in the radius of 50 meters.
             // Using google api, we are providing the streetview of the place.
             var getStreetView = function(data, status) {
-                if (status == google.maps.StreetViewStatus.OK) {
+               // console.log(google.maps.StreetViewStatus);
+                if (status === google.maps.StreetViewStatus.OK) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
                         nearStreetViewLocation, marker.position);
@@ -357,9 +364,9 @@ function initMap() {
                     var ratings = data.response.venue.rating;
                     fourList = fourList + '<strong> Ratings: ' + ratings + '</strong><br>' + items;
                 })
-                .error(function() {
-                    alert("Oops! Sorry. Something went wrong with FourSquare.");
-                });
+                .fail(function(jqXHR, textStatus, errorThrown){
+        alert("Following error occured while loading FourSquare! " + jqXHR.status + ": " + textStatus);
+    });
 
             // Call for the wikipidia API. which will shows us the links for the clicked marker.
             var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
@@ -386,7 +393,10 @@ function initMap() {
                     }
                     clearTimeout(wikiRequestTimeout); // if function executed succesfully we dont need time out !!!
                 }
-            });
+            }).fail(function(jqXHR, textStatus, errorThrown){
+        alert("Following error occured while loading wikipedia Links! " + jqXHR.status + ": " + textStatus);
+        console.log(jqXHR);
+    });
 
             // Call for the NY times links for our locations.
             var list;
@@ -409,22 +419,21 @@ function initMap() {
                     // Calling the panorama view on the selected marker location.
                     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 })
-                .error(function() {
-                    alert("Something went wrong! NYT articles culd not be loaded");
-                });
+                .fail(function(jqXHR, textStatus, errorThrown){
+        alert("Following error occured while loading FourSquare! " + jqXHR.status + ": " + textStatus);
+    });
 
             //pan down infowindow by 500px to keep whole infowindow on screen
-            map.panBy(0, -500);
-
+           // map.panBy(0, -500);
+       // google.maps.event.addListener(marker, 'click', function() {
             // Open the infowindow on the correct marker.
-            infowindow.open(map, marker);
+            infowindow.open(map,marker);
+          //  map.setCenter(marker.position);
+     //   });
         }
     }
 
-
-
 }
-
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
 // of 0, 0 and be anchored at 10, 34).
