@@ -256,7 +256,7 @@ function initMap() {
     // Creating the new infowindow of max size 350. It will shows the information about the place
     // whenever the respactive marker is clicked.
     var largeInfowindow = new google.maps.InfoWindow({
-        maxWidth: 250
+        maxWidth: 300
     });
 
     // Styling the markers a bit. This is the default marker icon color (red).
@@ -301,6 +301,7 @@ function initMap() {
         marker.addListener('click',function(){
             populateInfoWindow(this, largeInfowindow);
             this.setAnimation(google.maps.Animation.BOUNCE);
+            map.setCenter(this.getPosition());
             alert(this.getPosition());
                     });
         bounds.extend(markers[i].position);
@@ -357,12 +358,12 @@ function initMap() {
              */
             // Calling the foursquare url and it's response using jQuery's getJSON method.
             var foursquareurl = 'https://api.foursquare.com/v2/venues/' + marker.id + '?&limit=1&client_id=WZV4V3OE35NQJVIHYIDFZQK0H5ZZMMS5FKX4OTCGOZ3RR2E5&client_secret=NL4SDPZJBHH03UOIJXWQPSPLJ5TWWHL4H01C1S1YULWDZHWJ&v=20171016';
-            var fourList = '<br><strong>Related FourSquare Tip:</strong><br>';
+            var fourList = '<div id="four"><br><strong>Related FourSquare Tip:</strong><br></div>';
             $.getJSON(foursquareurl, function(data) {
                     // variable for the tip and rating of the place.
                     var items = data.response.venue.tips.groups[0].items[0].text;
                     var ratings = data.response.venue.rating;
-                    fourList = fourList + '<strong> Ratings: ' + ratings + '</strong><br>' + items;
+                    fourList = fourList + '<div class="infoContent" style="color: green;"><strong> Ratings: ' + ratings + '</strong><br></div>'+'<div class="infoContent" style="color: red;">'+ items + '</div>';
                 })
                 .fail(function(jqXHR, textStatus, errorThrown){
         alert("Following error occured while loading FourSquare! " + jqXHR.status + ": " + textStatus);
@@ -371,7 +372,7 @@ function initMap() {
             // Call for the wikipidia API. which will shows us the links for the clicked marker.
             var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
             var wikiList;
-            var fullWikiList = '<br><strong>Related Wikipedia Articles:</strong><br>';
+            var fullWikiList = '<div id="wiki"><br><strong>Related Wikipedia Articles:</strong><br></div>';
 
             var wikiRequestTimeout = setTimeout(function() { //there is no .error() method for JSON P.so we have to use this.
                 fullWikiList = fullWikiList + "failed to get wikipedia resoueces";
@@ -387,7 +388,7 @@ function initMap() {
                     } else {
                         articleList.forEach(function(articalStr) {
                             var url = 'http://en.wikipedia.org/wiki/' + articalStr;
-                            wikiList = ('<li><a href="' + url + '">' + articalStr + '</a></li>');
+                            wikiList = ('<li class="infoContent"><a href="' + url + '">' + articalStr + '</a></li>');
                             fullWikiList = fullWikiList + wikiList;
                         });
                     }
@@ -401,7 +402,7 @@ function initMap() {
             // Call for the NY times links for our locations.
             var list;
             var articles;
-            var fullList = '<br><strong>Related NY Times Articles:</strong><br>';
+            var fullList = '<div id="nyTime"><br><strong>Related NY Times Articles:</strong><br></div>';
             var nytimeurl = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=' + marker.title + '&sort=newest&api-key=940686e225724e549cc82b99694abee9';
 
             // JSON request for the NY times articles related to the location.
@@ -410,21 +411,21 @@ function initMap() {
                     articles = data.response.docs.slice(0, 3);
                     for (var i = 0; i < articles.length; i++) {
                         var article = articles[i];
-                        list = i + 1 + '.' + '<a href="' + article.web_url + '"">' + article.headline.main + '</a><br>';
+                        list ='<li class="infoContent"><a href="' + article.web_url + '"">' + article.headline.main + '</a></li><br>';
                         fullList = fullList + list;
                     }
                     // Setting the infowindow content for our information, which we got from our API calls.
-                    infowindow.setContent('<div style="font-size: 15px;"><strong>' + marker.title + '</strong></div>' + '<div><div id="pano"></div>' + '<div>' + fullList + '</div>' + '<div>' + fullWikiList + '</div>' + '<div>' + fourList + '</div>');
+                    infowindow.setContent('<div id="title"><strong>' + marker.title + '</strong></div>' + '<div><div id="pano"></div>' + '<div>' + fullList + '</div>' + '<div>' + fullWikiList + '</div>' + '<div>' + fourList + '</div>');
 
                     // Calling the panorama view on the selected marker location.
                     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 })
                 .fail(function(jqXHR, textStatus, errorThrown){
-        alert("Following error occured while loading FourSquare! " + jqXHR.status + ": " + textStatus);
+        alert("Following error occured while loading NYTimes! " + jqXHR.status + ": " + textStatus);
     });
 
             //pan down infowindow by 500px to keep whole infowindow on screen
-            map.panBy(0, -450);
+          //  map.panBy(0, -450);
             // Open the infowindow on the correct marker.
             infowindow.open(map,marker);
         }
