@@ -210,21 +210,20 @@ var locations = [{
     },
     fourSquareId: '4a2411fff964a520f37d1fe3'
 }, {
-    title: "Trader Joe's", // grocery shopping
-    location: {
-        lat: 40.741900,
-        lng: -73.993876
-    },
-    fourSquareId: '4c225ae47e85c9283ee5bb21'
-}, {
     title: "Sunrise Mart", // grocery shopping
     location: {
         lat: 40.729789,
         lng: -73.989328
     },
     fourSquareId: '4a98599ef964a520a62b20e3'
+}, {
+    title: "Trader Joe's", // grocery shopping
+    location: {
+        lat: 40.741900,
+        lng: -73.993876
+    },
+    fourSquareId: '4c225ae47e85c9283ee5bb21'
 }];
-
 var marker;
 //Function responsible for the map loading. Every time we load the file, the new map
 //is created with the markers pointing to the places and different functionality related to maps.
@@ -298,16 +297,21 @@ function initMap() {
         // Push the marker to our array of markers.
         markers.push(marker);
         // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click', function() {
-            populateInfoWindow(this, largeInfowindow);
-        this.setAnimation(google.maps.Animation.BOUNCE);
-    setTimeout(function(){ marker.setAnimation(null); }, 750);
-            map.setCenter(this.getPosition());
-            //  alert(this.getPosition());
-        });
+        marker.addListener('click', (function(marker) {
+            return function() {
+                populateInfoWindow(this, largeInfowindow);
+                map.setCenter(this.getPosition());
+                marker.setAnimation(google.maps.Animation.BOUNCE);
+                window.setTimeout(function() {
+                    marker.setAnimation(null);
+                }, 1400);
+            }
+        })(marker));
         bounds.extend(markers[i].position);
     } //end of for loop
-    map.fitBounds(bounds);
+    google.maps.event.addDomListener(window, 'resize', function() {
+        map.fitBounds(bounds); // `bounds` is a `LatLngBounds` object
+    });
 
     // Function which will populate the infowindow whenever we click the markers.
     function populateInfoWindow(marker, infowindow, locationItem) {
