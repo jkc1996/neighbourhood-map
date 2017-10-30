@@ -325,7 +325,7 @@ function initMap() {
             infowindow.addListener('closeclick', function() {
                 infowindow.marker = null;
                 // to make the map appear like it did when the page loaded initmap is induced (for keeping the same center as mapzoom changes the view and all markers dont seem visible after the infowindow is opened)
-                initMap();
+              //  initMap();
             });
             var streetViewService = new google.maps.StreetViewService();
             var radius = 50;
