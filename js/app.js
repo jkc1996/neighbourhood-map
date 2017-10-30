@@ -305,7 +305,7 @@ function initMap() {
                 window.setTimeout(function() {
                     marker.setAnimation(null);
                 }, 1400);
-            }
+            };
         })(marker));
         bounds.extend(markers[i].position);
     } //end of for loop
