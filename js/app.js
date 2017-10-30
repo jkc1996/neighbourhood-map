@@ -302,11 +302,8 @@ function initMap() {
         marker.addListener('click',function(){
             populateInfoWindow(this, largeInfowindow);
             this.setAnimation(google.maps.Animation.BOUNCE);
-            setTimeout(function() {
-        marker.setAnimation(null);
-    }, 3000);
             map.setCenter(this.getPosition());
-            alert(this.getPosition());
+          //  alert(this.getPosition());
                     });
         bounds.extend(markers[i].position);
 
@@ -426,9 +423,6 @@ function initMap() {
                 .fail(function(jqXHR, textStatus, errorThrown){
         alert("Following error occured while loading NYTimes! " + jqXHR.status + ": " + textStatus);
     });
-
-            //pan down infowindow by -450px to keep whole infowindow on screen
-          //  map.panBy(0, -450);
             // Open the infowindow on the correct marker.
             infowindow.open(map,marker);
         }
