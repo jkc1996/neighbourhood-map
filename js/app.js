@@ -229,7 +229,6 @@ var marker;
 //Function responsible for the map loading. Every time we load the file, the new map
 //is created with the markers pointing to the places and different functionality related to maps.
 function initMap() {
-    drop();
     //Creation of new google map.
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -299,16 +298,16 @@ function initMap() {
         // Push the marker to our array of markers.
         markers.push(marker);
         // Create an onclick event to open an infowindow at each marker.
-        marker.addListener('click',function(){
+        marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
             this.setAnimation(google.maps.Animation.BOUNCE);
             map.setCenter(this.getPosition());
-          //  alert(this.getPosition());
-                    });
+            //  alert(this.getPosition());
+        });
         bounds.extend(markers[i].position);
 
     } //end of for loop
-     map.fitBounds(bounds);
+    map.fitBounds(bounds);
 
     // Function which will populate the infowindow whenever we click the markers.
     function populateInfoWindow(marker, infowindow, locationItem) {
@@ -330,7 +329,7 @@ function initMap() {
             // If the view is not available it will the closest view in the radius of 50 meters.
             // Using google api, we are providing the streetview of the place.
             var getStreetView = function(data, status) {
-               // console.log(google.maps.StreetViewStatus);
+                // console.log(google.maps.StreetViewStatus);
                 if (status === google.maps.StreetViewStatus.OK) {
                     var nearStreetViewLocation = data.location.latLng;
                     var heading = google.maps.geometry.spherical.computeHeading(
@@ -363,11 +362,11 @@ function initMap() {
                     // variable for the tip and rating of the place.
                     var items = data.response.venue.tips.groups[0].items[0].text;
                     var ratings = data.response.venue.rating;
-                    fourList = fourList + '<div class="infoContent" style="color: green;"><strong> Ratings: ' + ratings + '</strong><br></div>'+'<div class="infoContent" style="color: red;">'+ items + '</div>';
+                    fourList = fourList + '<div class="infoContent" style="color: green;"><strong> Ratings: ' + ratings + '</strong><br></div>' + '<div class="infoContent" style="color: red;">' + items + '</div>';
                 })
-                .fail(function(jqXHR, textStatus, errorThrown){
-        alert("Following error occured while loading FourSquare! " + jqXHR.status + ": " + textStatus);
-    });
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    alert("Following error occured while loading FourSquare! " + jqXHR.status + ": " + textStatus);
+                });
 
             // Call for the wikipidia API. which will shows us the links for the clicked marker.
             var wikiUrl = 'https://en.wikipedia.org/w/api.php?action=opensearch&search=' + marker.title + '&format=json&callback=wikiCallback';
@@ -394,10 +393,10 @@ function initMap() {
                     }
                     clearTimeout(wikiRequestTimeout); // if function executed succesfully we dont need time out !!!
                 }
-            }).fail(function(jqXHR, textStatus, errorThrown){
-        alert("Following error occured while loading wikipedia Links! " + jqXHR.status + ": " + textStatus);
-        console.log(jqXHR);
-    });
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                alert("Following error occured while loading wikipedia Links! " + jqXHR.status + ": " + textStatus);
+                console.log(jqXHR);
+            });
 
             // Call for the NY times links for our locations.
             var list;
@@ -411,7 +410,7 @@ function initMap() {
                     articles = data.response.docs.slice(0, 3);
                     for (var i = 0; i < articles.length; i++) {
                         var article = articles[i];
-                        list ='<li class="infoContent"><a href="' + article.web_url + '"">' + article.headline.main + '</a></li><br>';
+                        list = '<li class="infoContent"><a href="' + article.web_url + '"">' + article.headline.main + '</a></li><br>';
                         fullList = fullList + list;
                     }
                     // Setting the infowindow content for our information, which we got from our API calls.
@@ -420,35 +419,16 @@ function initMap() {
                     // Calling the panorama view on the selected marker location.
                     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
                 })
-                .fail(function(jqXHR, textStatus, errorThrown){
-        alert("Following error occured while loading NYTimes! " + jqXHR.status + ": " + textStatus);
-    });
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    alert("Following error occured while loading NYTimes! " + jqXHR.status + ": " + textStatus);
+                });
             // Open the infowindow on the correct marker.
-            infowindow.open(map,marker);
+            infowindow.open(map, marker);
         }
     }
 
 }
 
-function drop() {
-        clearMarkers();
-        for (var i = 0; i < locations.length; i++) {
-          addMarkerWithTimeout(locations[i], i * 200);
-        }
-      }
-
-      function addMarkerWithTimeout(position, timeout) {
-        window.setTimeout(function() {
-          markers.push(marker);
-        }, timeout);
-      }
-
-      function clearMarkers() {
-        for (var i = 0; i < markers.length; i++) {
-          markers[i].setMap(null);
-        }
-        markers = [];
-      }
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
 // of 0, 0 and be anchored at 10, 34).
