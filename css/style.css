@@ -21,7 +21,6 @@ body {
   margin: 0;
   padding: 0;
 }
-
 .sidenav {
   height: 92%;
   width: 0;
@@ -109,411 +108,191 @@ body {
   height: 200px;
   margin-left: 25px;
 }
+/* Smartphones (portrait) ----------- */
 
-/*@media only screen and (min-width: 381px) and (max-width: 500px) {
-  #map {
-    font-size: 2px;
-    height: 85%;
-  }
-  #sideNavbar {
-    font-size: 2vw;
-  }
-  #filterSearch {
-    font-size: 3vw;
-  }
+@media only screen and (max-width: 320px) {
   #titleName {
     text-align: center;
-    font-size: 25px;
+    font-size: 7vw;
+    padding-right: 25px;
   }
-}  */
-
-/* Smartphones (portrait) ----------- */
-@media only screen and (max-width : 320px) {
-#titleName {
-text-align: center;
-font-size: 7vw;
-padding-right: 25px;
-}
-#subTitle {
-display: none;
-}
-#pano {
-max-width: 160px;
-margin-left: 20px;
-}
-.gm-style-iw {
+  #subTitle {
+    display: none;
+  }
+  #pano {
+    max-width: 160px;
+    margin-left: 20px;
+  }
+  .gm-style-iw {
     max-width: 200px;
-}
-#title {
-  font-size: 3.75vw;
-}
-#nyTime {
-  font-size: 3.5vw;
-}
-#wiki{
-  font-size: 3.5vw;
-}
-#four{
-  font-size: 3.5vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 3.25vw;
-}
-}
-
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen and (min-width : 321px) and (max-width : 480px) {
-#titleName {
-text-align: center;
-font-size: 5vw;
-padding-right: 25px;
-}
-#subTitle {
-text-align: center;
-font-size: 3vw;
-padding-right: 25px;
-}
-#pano {
-max-width: 200px;
-margin-left: 25px;
-}
-.gm-style-iw {
-    max-width: 250px;
-}
-
-#title {
-  font-size: 3.75vw;
-}
-#nyTime {
-  font-size: 3.5vw;
-}
-#wiki{
-  font-size: 3.5vw;
-}
-#four{
-  font-size: 3.5vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 3.25vw;
-}
-}
-
-@media only screen and (min-width : 481px) and (max-width : 768px) {
-#titleName {
-text-align: center;
-font-size: 3vw;
-padding-right: 25px;
-}
-#subTitle {
-text-align: center;
-font-size: 2vw;
-padding-right: 25px;
-}
-#pano {
-width: 250px;
-margin-left: 25px;
-}
-.gm-style-iw {
-    max-width: 300px;
-}
-#title {
-  font-size: 2.80vw;
-}
-#nyTime {
-  font-size: 2.40vw;
-}
-#wiki{
-  font-size: 2.40vw;
-}
-#four{
-  font-size: 2.40vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 2vw;
-}
-}
-
-@media only screen and (min-width : 769px) and (max-width : 1024px) {
-#titleName {
-text-align: center;
-font-size: 3vw;
-padding-right: 25px;
-}
-#subTitle {
-text-align: center;
-font-size: 1.75vw;
-padding-right: 25px;
-}
-#pano {
-width: 250px;
-margin-left: 25px;
-}
-.gm-style-iw {
-    max-width: 300px;
-}
-#title {
-  font-size: 1.9vw;
-}
-#nyTime {
-  font-size: 1.5vw;
-}
-#wiki{
-  font-size: 1.5vw;
-}
-#four{
-  font-size: 1.5vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 1.25vw;
-}
-}
-
-@media only screen and (min-width : 1025px) and (max-width : 1440px) {
-#titleName {
-text-align: center;
-font-size: 2vw;
-padding-right: 25px;
-}
-#subTitle {
-text-align: center;
-font-size: 1.5vw;
-padding-right: 25px;
-}
-#pano {
-width: 250px;
-margin-left: 25px;
-}
-.gm-style-iw {
-    max-width: 300px;
-}
-#title {
-  font-size: 1.5vw;
-}
-#nyTime {
-  font-size: 1.2vw;
-}
-#wiki{
-  font-size: 1.2vw;
-}
-#four{
-  font-size: 1.2vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 1vw;
-}
-}
-
-@media only screen and (min-width : 1041px) {
-#titleName {
-text-align: center;
-font-size: 1.9vw;
-padding-right: 25px;
-}
-#subTitle {
-text-align: center;
-font-size: 1.3vw;
-padding-right: 25px;
-}
-#pano {
-width: 250px;
-margin-left: 25px;
-}
-.gm-style-iw {
-    max-width: 300px;
-}
-#title {
-  font-size: 1.4vw;
-}
-#nyTime {
-  font-size: 1.15vw;
-}
-#wiki{
-  font-size: 1.15vw;
-}
-#four{
-  font-size: 1.15vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 1vw;
-}
-}
-
-/* iPads (portrait and landscape) -----------
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-.gm-style-iw {
-    width: 250px;
-    text-align: left;
-}
-#infoContent {
-  font-size: 30px;
-  font-weight: bold;
-}
-}  */
-
-/* iPhone 5 -----------
-@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : landscape) {
-
-.gm-style-iw {
-    width: 300px;
-    text-align: left;
-}
-#title {
-  font-size: 3vw;
-}
-#nyTime {
-  font-size: 2.5vw;
-}
-#wiki{
-  font-size: 2.5vw;
-}
-#four{
-  font-size: 2.5vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 2.5vw;
-}
-} */
-/*
-@media only screen and (min-device-width: 320px) and (max-device-height: 568px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
-.gm-style-iw {
-    width: 250px;
-    text-align: left;
-}
-#title {
-  font-size: 5vw;
-}
-#nyTime {
-  font-size: 5vw;
-}
-#wiki{
-  font-size: 5vw;
-}
-#four{
-  font-size: 5vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 4vw;
-}
-}  */
-
-/* iPhone 6 -----------
-@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : landscape) {
-.gm-style-iw {
-    width: 300px;
-    text-align: left;
-}
-#title {
-  font-size: 2.75vw;
-}
-#nyTime {
-  font-size: 2.25vw;
-}
-#wiki{
-  font-size: 2.25vw;
-}
-#four{
-  font-size: 2.25vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 1.75vw;
-}
-}   */
-
-/* @media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2){
-.gm-style-iw {
-    width: 250px;
-}
-#title {
-  font-size: 5vw;
-}
-#nyTime {
-  font-size: 4vw;
-}
-#wiki{
-  font-size: 4vw;
-}
-#four{
-  font-size: 4vw;
-}
-.infoContent {
-font-weight: bold;
+  }
+  #title {
+    font-size: 3.75vw;
+  }
+  #nyTime,
+  #wiki,
+  #four {
     font-size: 3.5vw;
-}
-}  */
-
-/* Samsung Galaxy S5 -----------
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) {
-.gm-style-iw {
-    width: 250px;
-}
-#title {
-  font-size: 2.75vw;
-}
-#nyTime {
-  font-size: 2.25vw;
-}
-#wiki{
-  font-size: 2.25vw;
-}
-#four{
-  font-size: 2.25vw;
-}
-.infoContent {
-font-weight: bold;
-    font-size: 1.75vw;
-}
-}  */
-
-/* @media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) {
-.gm-style-iw {
-    width: 250px;
-}
-#title {
-  font-size: 4.5vw;
-}
-#nyTime {
-  font-size: 3.75vw;
-}
-#wiki{
-  font-size: 3.75vw;
-}
-#four{
-  font-size: 3.75vw;
-}
-.infoContent {
-font-weight: bold;
+  }
+  .infoContent {
+    font-weight: bold;
     font-size: 3.25vw;
+  }
 }
-} */
+/* Smartphones (portrait and landscape) ----------- */
 
-/* @media only screen and (min-device-width: 412px) and (max-device-height: 732px) and (orientation : portrait) {
-
-.gm-style-iw {
-    width: 250px;
-}
-#title {
-  font-size: 4vw;
-}
-#nyTime {
-  font-size: 3.5vw;
-}
-#wiki{
-  font-size: 3.5vw;
-}
-#four{
-  font-size: 3.5vw;
-}
-.infoContent {
-font-weight: bold;
+@media only screen and (min-width: 321px) and (max-width: 480px) {
+  #titleName {
+    text-align: center;
+    font-size: 5vw;
+    padding-right: 25px;
+  }
+  #subTitle {
+    text-align: center;
     font-size: 3vw;
+    padding-right: 25px;
+  }
+  #pano {
+    max-width: 200px;
+    margin-left: 25px;
+  }
+  .gm-style-iw {
+    max-width: 250px;
+  }
+  #title {
+    font-size: 3.75vw;
+  }
+  #nyTime,
+  #wiki,
+  #four {
+    font-size: 3.5vw;
+  }
+  .infoContent {
+    font-weight: bold;
+    font-size: 3.25vw;
+  }
 }
-} */
+@media only screen and (min-width: 481px) and (max-width: 768px) {
+  #titleName {
+    text-align: center;
+    font-size: 3vw;
+    padding-right: 25px;
+  }
+  #subTitle {
+    text-align: center;
+    font-size: 2vw;
+    padding-right: 25px;
+  }
+  #pano {
+    width: 250px;
+    margin-left: 25px;
+  }
+  .gm-style-iw {
+    max-width: 300px;
+  }
+  #title {
+    font-size: 2.80vw;
+  }
+  #nyTime,
+  #wiki,
+  #four {
+    font-size: 2.40vw;
+  }
+  .infoContent {
+    font-weight: bold;
+    font-size: 2vw;
+  }
+}
+@media only screen and (min-width: 769px) and (max-width: 1024px) {
+  #titleName {
+    text-align: center;
+    font-size: 3vw;
+    padding-right: 25px;
+  }
+  #subTitle {
+    text-align: center;
+    font-size: 1.75vw;
+    padding-right: 25px;
+  }
+  #pano {
+    width: 250px;
+    margin-left: 25px;
+  }
+  .gm-style-iw {
+    max-width: 300px;
+  }
+  #title {
+    font-size: 1.9vw;
+  }
+  #nyTime,
+  #wiki,
+  #four {
+    font-size: 1.5vw;
+  }
+  .infoContent {
+    font-weight: bold;
+    font-size: 1.25vw;
+  }
+}
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  #titleName {
+    text-align: center;
+    font-size: 2vw;
+    padding-right: 25px;
+  }
+  #subTitle {
+    text-align: center;
+    font-size: 1.5vw;
+    padding-right: 25px;
+  }
+  #pano {
+    width: 250px;
+    margin-left: 25px;
+  }
+  .gm-style-iw {
+    max-width: 300px;
+  }
+  #title {
+    font-size: 1.5vw;
+  }
+  #nyTime,
+  #wiki,
+  #four {
+    font-size: 1.2vw;
+  }
+  .infoContent {
+    font-weight: bold;
+    font-size: 1vw;
+  }
+}
+@media only screen and (min-width: 1041px) {
+  #titleName {
+    text-align: center;
+    font-size: 1.9vw;
+    padding-right: 25px;
+  }
+  #subTitle {
+    text-align: center;
+    font-size: 1.3vw;
+    padding-right: 25px;
+  }
+  #pano {
+    width: 250px;
+    margin-left: 25px;
+  }
+  .gm-style-iw {
+    max-width: 300px;
+  }
+  #title {
+    font-size: 1.4vw;
+  }
+  #nyTime,
+  #wiki,
+  #four {
+    font-size: 1.15vw;
+  }
+  .infoContent {
+    font-weight: bold;
+    font-size: 1vw;
+  }
+}
