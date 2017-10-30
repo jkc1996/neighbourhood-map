@@ -229,6 +229,7 @@ var marker;
 //Function responsible for the map loading. Every time we load the file, the new map
 //is created with the markers pointing to the places and different functionality related to maps.
 function initMap() {
+    drop();
     //Creation of new google map.
     map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -301,6 +302,9 @@ function initMap() {
         marker.addListener('click',function(){
             populateInfoWindow(this, largeInfowindow);
             this.setAnimation(google.maps.Animation.BOUNCE);
+            setTimeout(function() {
+        marker.setAnimation(null);
+    }, 3000);
             map.setCenter(this.getPosition());
             alert(this.getPosition());
                     });
@@ -308,7 +312,6 @@ function initMap() {
 
     } //end of for loop
      map.fitBounds(bounds);
-
 
     // Function which will populate the infowindow whenever we click the markers.
     function populateInfoWindow(marker, infowindow, locationItem) {
@@ -346,8 +349,8 @@ function initMap() {
                     var panorama = new google.maps.StreetViewPanorama(
                         document.getElementById('pano'), panoramaOptions);
                 } else {
-                    infowindow.setContent('<div>' + marker.title + '</div>' +
-                        '<div>sorry ! No Street View Found</div>');
+                    alert("Sorry No streetview found !");
+                    infowindow.setContent('<div id="title"><strong>' + marker.title + '</strong></div>' + '<div>sorry ! No Street View Found</div>' + '<div>' + fullList + '</div>' + '<div>' + fullWikiList + '</div>' + '<div>' + fourList + '</div>');
                 }
 
             };
@@ -424,7 +427,7 @@ function initMap() {
         alert("Following error occured while loading NYTimes! " + jqXHR.status + ": " + textStatus);
     });
 
-            //pan down infowindow by 500px to keep whole infowindow on screen
+            //pan down infowindow by -450px to keep whole infowindow on screen
           //  map.panBy(0, -450);
             // Open the infowindow on the correct marker.
             infowindow.open(map,marker);
@@ -432,6 +435,26 @@ function initMap() {
     }
 
 }
+
+function drop() {
+        clearMarkers();
+        for (var i = 0; i < locations.length; i++) {
+          addMarkerWithTimeout(locations[i], i * 200);
+        }
+      }
+
+      function addMarkerWithTimeout(position, timeout) {
+        window.setTimeout(function() {
+          markers.push(marker);
+        }, timeout);
+      }
+
+      function clearMarkers() {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+      }
 // This function takes in a COLOR, and then creates a new marker
 // icon of that color. The icon will be 21 px wide by 34 high, have an origin
 // of 0, 0 and be anchored at 10, 34).
