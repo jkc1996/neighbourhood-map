@@ -300,12 +300,12 @@ function initMap() {
         // Create an onclick event to open an infowindow at each marker.
         marker.addListener('click', function() {
             populateInfoWindow(this, largeInfowindow);
-            this.setAnimation(google.maps.Animation.BOUNCE);
+        this.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function(){ marker.setAnimation(null); }, 750);
             map.setCenter(this.getPosition());
             //  alert(this.getPosition());
         });
         bounds.extend(markers[i].position);
-
     } //end of for loop
     map.fitBounds(bounds);
 
